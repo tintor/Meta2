@@ -1,0 +1,42 @@
+	//	List<Vector2> findPath(final Unit unit, final Vector2 destination, final int targetId, final float clearance) {
+	//		final List<Vector2> nodes = generatePathNodes(unit.radius + clearance);
+	//		nodes.add(destination);
+	//
+	//		// Generate edges
+	//
+	//		final List<Vector2> path = new ArrayList<Vector2>();
+	//
+	//		return path;
+	//	}
+	//
+	//	private boolean isPointClear(final Vector2 a, final float radius) {
+	//		for (final Unit u : units) {
+	//			if (u.position.distanceSquared(a) < Util.square(radius + u.radius))
+	//				return false;
+	//		}
+	//		return true;
+	//	}
+	//
+	//	private boolean isLineClear(final Vector2 a, final Vector2 b, final float radius) {
+	//		for (final Unit u : units) {
+	//			if (u.position.distanceSquared(a, b) < Util.square(radius + u.radius))
+	//				return false;
+	//		}
+	//		return true;
+	//	}
+	//
+	//	private static final Vector2[] dirs = { Vector2.create(1, 0), Vector2.create(0, 1), Vector2.create(-1, 0),
+	//			Vector2.create(0, -1) };
+	//
+	//	private List<Vector2> generatePathNodes(final float radius) {
+	//		final List<Vector2> nodes = new ArrayList<Vector2>();
+	//		for (final Unit u : units) {
+	//			for (final Vector2 dir : dirs) {
+	//				final Vector2 node = u.position.add(radius + u.radius, dir);
+	//				if (isPointClear(node, radius)) {
+	//					nodes.add(node);
+	//				}
+	//			}
+	//		}
+	//		return nodes;
+	//	}

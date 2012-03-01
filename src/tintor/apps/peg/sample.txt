@@ -1,0 +1,13 @@
+class Main
+	void main
+		a = 2 * 3 + 3
+		g = Grammar.new
+		g.put "date", "(", g.get("date"), ")"
+		g.put "date", g.get("number"), Matcher.any("-", grammar.get("number"))
+		g.put "number", Matcher.range('0', '9').repeat
+		
+		out.println g.get("date").search("danas je (((1984-9-30)).", 0)
+
+class Book
+	go
+

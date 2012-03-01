@@ -1,0 +1,15 @@
+- Solids
+	- DONE aproximate concave shapes with list of convex
+	- DONE convex can be: sphere(point), cylinder(line), box, polyhedron
+	- DONE material properties (color, density, friction, drag) should be per convex
+	- implement all collision functions
+- Robotics
+	- actuators
+	- sensors
+	- high level control 
+- Multicore / Performance
+- Editor
+	- drawing objects
+	- property tree editor
+	- import/export
+- Rendering

@@ -1,0 +1,241 @@
+ChainScanner
+
+	//	static class Chain implements Comparable<Chain> {
+	//		final Point point;
+	//		Chain prev, next;
+	//
+	//		Chain(final Point a) {
+	//			point = a;
+	//		}
+	//
+	//		Chain(final Point a, final Chain prev) {
+	//			point = a;
+	//			assert prev.next == null;
+	//			this.prev = prev;
+	//			prev.next = this;
+	//		}
+	//
+	//		@Override
+	//		public int compareTo(final Chain p) {
+	//			return point.compareTo(p.point);
+	//		}
+	//
+	//		Chain split(final Point p) {
+	//			assert next != null;
+	//			final Chain c = new Chain(p);
+	//
+	//			c.next = next;
+	//			c.prev = this;
+	//
+	//			next.prev = c;
+	//			next = c;
+	//			return c;
+	//		}
+	//
+	//		static Chain reverse(Chain in) {
+	//			assert in.prev == null;
+	//			Chain next = in.next;
+	//			in.next = null;
+	//			Chain out = in;
+	//			in = next;
+	//
+	//			while (in != null) {
+	//				next = in.next;
+	//				in.next = out;
+	//				in.prev = null;
+	//				out.prev = in;
+	//				out = in;
+	//				in = next;
+	//			}
+	//			return out;
+	//		}
+	//	}
+
+	//	void addRing(final Point... points) {
+	//		if (points.length == 0)
+	//			return;
+	//
+	//		if (points.length == 1) {
+	//			queue.add(new Chain(points[0]));
+	//			return;
+	//		}
+	//
+	//		for (int i = 1; i < points.length; i++) {
+	//			final Point a = points[i - 1], b = points[i];
+	//			if (a.compareTo(b) < 0) {
+	//				addEdge(a, b);
+	//			} else if (a.compareTo(b) > 0) {
+	//				addEdge(b, a);
+	//			}
+	//		}
+	//
+	//		final List<Chain> chains = new ArrayList<Chain>();
+	//
+	//		final Chain headAsc = null, tailAsc = null;
+	//		final Chain headDesc = null, tailDesc = null;
+	//
+	//		for (int i = 1; i < points.length; i++) {
+	//			final Chain a = new Chain(points[i]);
+	//
+	//			if (points[i - 1].compareTo(points[i]) < 0) {
+	//				// find chain that ends in points[i-1] and add points[i] to the end of it
+	//			} else {
+	//				// find chain that begins with points[i-1] and add points[i] to the start of it
+	//				// if there is no such chain 
+	//			}
+	//			final Chain c = new Chain(points[i]);
+	//
+	//			if (max.compareTo(c) <= 0) {
+	//				max.next = c;
+	//				c.prev = max;
+	//				max = c;
+	//			}
+	//		}
+	//
+	//		for (int i = 1; i < points.length; i++) {
+	//			tail = new Chain(points[i], tail);
+	//		}
+	//
+	//		addChain(head);
+	//	}
+
+	//	private void addChain(Chain a) {
+	//		// First split chains into a list
+	//		final List<Chain> list = new ArrayList<Chain>();
+	//		list.add(a);
+	//		a = a.next;
+	//		while (a != null) {
+	//			if (a.next != null && a.prev.point.compareTo(a.point) != a.point.compareTo(a.next.point)) {
+	//				final Chain b = new Chain(a.point);
+	//				list.add(b);
+	//				b.next = a.next;
+	//				a.next.prev = b;
+	//				a.next = null;
+	//				a = b;
+	//			}
+	//			a = a.next;
+	//		}
+	//
+	//		// Add chains from list to queue with reversing if necessary
+	//		for (final Chain c : list) {
+	//			queue.add(c.next != null && c.compareTo(c.next) > 0 ? Chain.reverse(c) : c);
+	//		}
+	//	}
+
+	//	void scan() {
+	//		final List<Chain> junction = new ArrayList<Chain>();
+	//
+	//		while (!queue.isEmpty()) {
+	//			final Chain chain = queue.remove();
+	//
+	//			if (chain.prev != null) {
+	//				activeChains.remove(chain.prev);
+	//			}
+	//
+	//			if (chain.prev == null && chain.next == null) {
+	//				// This is point chain
+	//				// TODO check if it intersects any of the active chains
+	//			}
+	//
+	//			if (chain.next != null) {
+	//				// TODO replace it with interval tree
+	//				for (final Chain aChain : activeChains) {
+	//					if (intersectY(aChain, chain)) {
+	//						splitIfIntersect(aChain, chain);
+	//					}
+	//				}
+	//				activeChains.add(chain);
+	//			}
+	//
+	//			junction.add(chain);
+	//			if (queue.isEmpty() || chain.point.compareTo(queue.peek().point) < 0) {
+	//				processTheJunction(junction);
+	//				junction.clear();
+	//			}
+	//		}
+	//	}
+
+	//	private boolean intersectY(final Chain a, final Chain b) {
+	//		double amax, amin;
+	//		if (a.point.y > a.next.point.y) {
+	//			amax = a.point.y;
+	//			amin = a.next.point.y;
+	//		} else {
+	//			amin = a.point.y;
+	//			amax = a.next.point.y;
+	//		}
+	//
+	//		double bmax, bmin;
+	//		if (b.point.y > b.next.point.y) {
+	//			bmax = b.point.y;
+	//			bmin = b.next.point.y;
+	//		} else {
+	//			bmin = a.point.y;
+	//			bmax = a.next.point.y;
+	//		}
+	//
+	//		return amax >= bmin && bmax >= amin;
+	//	}
+
+	// returns true if b was split
+	//	private boolean splitIfIntersect(final Chain a, final Chain b) {
+	//		final SegmentIntersection i = SegmentIntersection
+	//				.intersection(a.point, a.next.point, b.point, b.next.point);
+	//		if (i == null)
+	//			return false;
+	//
+	//		final PointIntersection pi = (PointIntersection) i;
+	//		if (pi != null) {
+	//			if (pi.m == 0.0) {
+	//				if (pi.n == 0.0 || pi.n == 1.0)
+	//					// endpoints touching
+	//					return false;
+	//
+	//				// first endpoint from a touches interior of b
+	//				queue.add(b.split(a.point));
+	//				return true;
+	//			} else if (pi.m == 1.0) {
+	//				if (pi.n == 0.0 || pi.n == 1.0)
+	//					// endpoints touching
+	//					return false;
+	//
+	//				// second endpoint from a touches interior of b
+	//				queue.add(b.split(a.next.point));
+	//				return true;
+	//			} else {
+	//				if (pi.n == 0.0) {
+	//					// first endpoint from b touches interior of a
+	//					queue.add(a.split(b.point));
+	//					return false;
+	//				}
+	//
+	//				if (pi.n == 1.0) {
+	//					// second endpoint from b touches interior of a
+	//					queue.add(a.split(b.next.point));
+	//					return false;
+	//				}
+	//
+	//				// crossing
+	//				final Point p = new Point(pi.x, pi.y, 0);
+	//				queue.add(a.split(p));
+	//				queue.add(b.split(p));
+	//				return true;
+	//			}
+	//		}
+	//
+	//		final SegmentOverlap si = (SegmentOverlap) i;
+	//		if (si != null)
+	//			// TODO
+	//			return false;
+	//	}
+
+	//	void processTheJunction(final List<Chain> chains) {
+	//		System.out.println("junction " + chains.get(0).point);
+	//		for (final Chain chain : chains) {
+	//			System.out.print("\t");
+	//			System.out.print(chain.prev != null ? chain.prev.point : "null");
+	//			System.out.print(" ");
+	//			System.out.println(chain.next != null ? chain.next.point : "null");
+	//		}
+	//	}
+

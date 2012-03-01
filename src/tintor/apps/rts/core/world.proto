@@ -1,0 +1,25 @@
+package tintor.apps.rts.core;
+
+option java_outer_classname = "Protos";
+
+message World {
+	required int32 size = 1;
+	required int32 time = 2;
+	repeated Unit unit = 3;
+}
+
+message Unit {
+	required int32 id = 1;
+	required int32 player = 2;
+	required Vector2 position = 3;
+	optional Vector2 destination = 4;
+
+	required float maxVelocity = 5;
+	required float radius = 6;
+	required float mass = 7;
+}
+
+message Vector2 {
+	required float x = 1;
+	required float y = 2;
+}
